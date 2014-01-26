@@ -1,0 +1,14 @@
+- name: restart ntp
+  service: name=ntp state=restarted
+
+- name: restart fail2ban
+  service: name=fail2ban state=restarted
+
+- name: restart ssh
+  service: name=ssh state=restarted
+
+- name: restart postfix
+  service: name=postfix state=restarted
+
+- name: reload ferm rules
+  command: /etc/init.d/ferm reload

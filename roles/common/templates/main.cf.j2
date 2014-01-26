@@ -1,0 +1,51 @@
+smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+biff = no
+append_dot_mydomain = no
+readme_directory = no
+
+myhostname = {{ domain }}
+
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+myorigin = /etc/mailname
+
+## Next line tells Postfix the destinations where it will send mail directly
+## instead of relaying, so that you can use Postfix to send mail to and
+## from your local root account, for example.
+mydestination = localhost
+
+## Next line tells Postfix what networks it can trust. Any address or
+## block of addresses listed here will be allowed to relay e-mail through
+## this Postfix server and on to Google Apps. Handy if you've got a printer
+## or other device that can send e-mail!
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+
+## Tells Postfix which host to use when relaying mail. Google's SMTP server
+## name goes here, along with the correct SMTP port.
+relayhost = [smtp.gmail.com]:587
+relay_transport = relay
+relay_destination_concurrency_limit = 1
+
+# TLS client parameters
+## The certificate authority file below is in the default location for Ubuntu,
+## and is used by Postfix to validate the CA used by Google's mail servers
+## for when Postfix talks to them to send mail
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+smtp_use_tls = yes
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtp_tls_note_starttls_offer = yes
+tls_random_source = dev:/dev/urandom
+
+## These settings tell Postfix where to find the username and password to use
+## when relaying e-mail through the server set in the relayhost directive above
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl/passwd
+smtp_sasl_security_options = noanonymous
+smtp_sasl_tls_security_options = noanonymous
+smtp_connection_cache_destinations = smtp.gmail.com
+
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+default_transport = smtp
+default_destination_concurrency_limit = 5

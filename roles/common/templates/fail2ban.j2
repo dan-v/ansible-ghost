@@ -1,0 +1,18 @@
+[DEFAULT]
+ignoreip = 127.0.0.1
+bantime = 86400
+destemail = {{ mailer_email }}
+banaction = iptables-multiport
+action = %(action_)s
+
+# JAILS
+[ssh]
+enabled = true
+maxretry = 3
+
+[pam-generic]
+enabled = true
+banaction = iptables-allports
+
+[ssh-ddos]
+enabled = true

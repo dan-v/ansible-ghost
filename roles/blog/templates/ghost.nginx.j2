@@ -1,0 +1,51 @@
+upstream ghost_upstream {
+  server 127.0.0.1:2368;
+  keepalive 64;
+}
+
+server {
+  listen 80;
+  server_name {{ blog_domain }} www.{{ blog_domain }};
+  rewrite ^(.*) https://$host$1 permanent;
+   
+  location ~ \.(php|html)$ {
+    deny all;
+  }
+   
+  access_log /dev/null;
+  error_log /dev/null;
+}
+
+server {
+  ssl on;
+  listen 443;
+  server_name {{ blog_domain }} www.{{ blog_domain }};
+
+  ssl_certificate /etc/nginx/ssl/{{ blog_domain }}.crt;
+  ssl_certificate_key /etc/nginx/ssl/{{ blog_domain }}.key;
+  ssl_session_timeout 15m;
+  ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers RC4:HIGH:!aNULL:!MD5;
+  ssl_prefer_server_ciphers on;
+  ssl_session_cache shared:SSL:10m;      
+
+  #if ($host = '{{ blog_domain }}' ) {
+  #        rewrite  ^/(.*)$  http://www.{{ blog_domain }}/$1  permanent;
+  #}
+
+  #location ~ ^/(ghost/signup/) {
+  #        rewrite ^/(.*)$ http://YOUR_DOMAIN/ permanent;
+  #}
+
+  location / {
+    proxy_redirect off;
+    proxy_set_header   X-Real-IP            $remote_addr;
+    proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Forwarded-Proto $scheme;
+    proxy_set_header   Host                   $http_host;
+    proxy_set_header   X-NginX-Proxy    true;
+    proxy_set_header   Connection "";
+    proxy_http_version 1.1;
+    proxy_pass         http://ghost_upstream;
+  }
+}

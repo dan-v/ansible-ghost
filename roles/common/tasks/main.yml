@@ -1,0 +1,31 @@
+- name: Update apt cache
+  apt: update_cache=yes
+
+- name: Upgrade all safe packages
+  apt: upgrade=safe
+
+- name: Install common packages
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - sudo
+    - vim
+    - htop
+    - iftop
+    - git
+    - screen
+    - build-essential
+    - unzip
+
+- name: Add deployment user
+  user: name={{ deploy_user }} password={{ deploy_password }} shell=/bin/bash
+
+- name: Add authorized deploy key
+  authorized_key: user={{ deploy_user }} key="{{ ssh_pub_key }}"
+
+- name: Add deploy user to sudoers
+  lineinfile: dest=/etc/sudoers regexp="{{ deploy_user }} ALL" line="{{ deploy_user}} ALL=(ALL) ALL" state=present
+
+- include: ntp.yml tags=ntp
+- include: firewall.yml tags=firewall
+- include: mail.yml tags=mail
+- include: security.yml tags=security

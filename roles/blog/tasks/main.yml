@@ -1,0 +1,3 @@
+- include: nginx.yml tags=nginx
+- include: ssl.yml tags=ssl
+- include: ghost.yml tags=ghost

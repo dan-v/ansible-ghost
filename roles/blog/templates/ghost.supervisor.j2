@@ -1,0 +1,9 @@
+[program:ghost]
+environment = NODE_ENV="production"
+command = node {{ ghost_install_dir }}/index.js
+directory = {{ ghost_install_dir }}
+autostart = true
+autorestart = true
+stdout_logfile = /var/log/supervisor/ghost.stdout.log
+stderr_logfile = /var/log/supervisor/ghost.stderr.log
+user = {{ ghost_user }}

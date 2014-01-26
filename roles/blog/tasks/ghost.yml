@@ -1,0 +1,44 @@
+- name: Add nodejs PPA repository
+  apt_repository: repo='ppa:chris-lea/node.js' update_cache=yes
+
+- name: Install nodejs package
+  apt: pkg=nodejs state=present
+
+- name: Install supervisor package
+  apt: pkg=supervisor state=present
+
+- name: Create ghost user
+  user: name={{ ghost_user }} createhome=no shell=/bin/nologin
+
+- name: Create ghost install dir
+  file: path={{ ghost_install_dir }} state=directory owner={{ ghost_user }} group={{ ghost_user }}
+
+- name: Download ghost {{ ghost_ver }}
+  get_url: url={{ ghost_zip_url }} dest=/tmp/ghost-{{ ghost_ver }}.zip
+
+- name: Extract ghost release
+  command: unzip -qod {{ ghost_install_dir }} /tmp/ghost-{{ ghost_ver }}.zip
+
+- name: Update ownership of ghost dir
+  file: path={{ ghost_install_dir }} owner={{ ghost_user }} recurse=yes state=directory
+
+- name: Install node dependencies
+  npm: path={{ ghost_install_dir }} production=yes
+
+- name: Configure ghost
+  template: src=config.js.j2 dest={{ ghost_install_dir }}/config.js
+  notify: restart ghost
+
+- name: Install ghost virtualhost
+  template: src=ghost.nginx.j2 dest=/etc/nginx/sites-available/ghost
+
+- name: Enable ghost virtualhost
+  file: src=/etc/nginx/sites-available/ghost path=/etc/nginx/sites-enabled/ghost state=link
+  notify: restart nginx
+
+- name: Configure supervisor
+  template: src=ghost.supervisor.j2 dest=/etc/supervisor/conf.d/ghost.conf
+
+- name: Configure supervisor
+  command: supervisorctl update
+  notify: restart supervisor
