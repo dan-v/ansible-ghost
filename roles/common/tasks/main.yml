@@ -23,7 +23,7 @@
   authorized_key: user={{ deploy_user }} key="{{ ssh_pub_key }}"
 
 - name: Add deploy user to sudoers
-  lineinfile: dest=/etc/sudoers regexp="{{ deploy_user }} ALL" line="{{ deploy_user}} ALL=(ALL) ALL" state=present
+  lineinfile: dest=/etc/sudoers regexp="{{ deploy_user }} ALL" line="{{ deploy_user}} ALL=(ALL) NOPASSWD:ALL" state=present
 
 - include: ntp.yml tags=ntp
 - include: firewall.yml tags=firewall
