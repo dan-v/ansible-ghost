@@ -15,6 +15,7 @@
     - screen
     - build-essential
     - unzip
+    - make
 
 - name: Add deployment user
   user: name={{ deploy_user }} password={{ deploy_password }} shell=/bin/bash
