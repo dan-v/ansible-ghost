@@ -1,0 +1,14 @@
+# common
+domain: vittegleo.com
+mailer_email: "mailer@{{ domain }}"
+deploy_user: deploy
+deploy_password: '$6$AC3bdCF7!$rTUls2JX5m8AVinbUMrxbDQMD4dpCHcxxePsruC/k2UG3Xgycq/J8bhI87jsS2RvitozR3koH16u4Z.Oqn1zf.'
+ssh_pub_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClhR90F4TSvEdkpC7HNvt029WEyWXsqWTxSm7IZ33gTvphtHGffZWgCk6ANoBtQRhHGUqY/dwpiUXWlBg7sLQ74M7AxK7t17l0v/etzw1VdR1Yx1K9h0XIyZrU0tKjbNf8HRjfqlyJpM9ys2rXhFTUjOw+rdrjtTBP0QPt+bNS91I/la4+Pd0PFoKKn288TD168ngO203uOl6iOHZiMJxp3mS1s+jbW70M7aCSWcVLnY53uJuKE1xBpckxDs+bMcIACdlXmrcTXQBH60RGagsyxWWK4XcpKCQcMxNXwCVe+j1GM/JsUsVUHiO5+1BYI141aoisMF1y3OnnTldQVAG/'
+ubuntu_release: 'precise'
+
+# blog
+blog_domain: "{{ domain }}"
+ghost_ver: 0.4.0
+ghost_zip_url: "https://ghost.org/zip/ghost-{{ ghost_ver }}.zip"
+ghost_user: ghost
+ghost_install_dir: /home/ghost

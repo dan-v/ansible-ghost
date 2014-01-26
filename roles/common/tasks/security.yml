@@ -1,0 +1,32 @@
+- name: Install fail2ban package
+  apt: pkg=fail2ban state=installed
+
+- name: Install logwatch package
+  apt: pkg=logwatch state=installed
+
+- name: Disallow root SSH access
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+  notify: restart ssh
+
+- name: Disallow SSH password authentication
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+  notify: restart ssh
+
+- name: Remove sudo group rights
+  lineinfile: dest=/etc/sudoers regexp="^%sudo" state=absent
+
+- name: Install unattended-upgrades
+  apt: pkg=unattended-upgrades state=present
+
+- name: Adjust APT update intervals
+  copy: src=apt_periodic dest=/etc/apt/apt.conf.d/10periodic
+
+- name: Make sure unattended-upgrades only installs from {{ ubuntu_release }}-security
+  lineinfile: dest=/etc/apt/apt.conf.d/50unattended-upgrades regexp="{{ ubuntu_release }}-updates" state=absent
+
+- name: Make logwatch mail {{ mailer_email }} daily
+  lineinfile: dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto {{ mailer_email }} --detail high" state=present create=yes
+
+- name: Copy fail2ban configuration into place
+  template: src=fail2ban.j2 dest=/etc/fail2ban/jail.local
+  notify: restart fail2ban

@@ -1,0 +1,10 @@
+- name: Create nginx ssl directory
+  action: file dest=/etc/nginx/ssl state=directory
+
+- name: Copy SSL private key to {{ nginx_ssl_dir }}/{{ blog_domain }}.key
+  copy: src=server.key dest={{ nginx_ssl_dir }}/{{ blog_domain }}.key group=root owner=root
+  notify: restart nginx
+
+- name: Copy SSL public cert to {{ nginx_ssl_dir }}/{{ blog_domain }}.crt
+  copy: src=server.crt dest={{ nginx_ssl_dir }}/{{ blog_domain }}.crt group=root owner=root
+  notify: restart nginx

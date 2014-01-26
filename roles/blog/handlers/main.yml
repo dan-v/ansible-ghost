@@ -1,0 +1,8 @@
+- name: restart nginx
+  service: name=nginx state=restarted
+
+- name: restart supervisor
+  service: name=supervisor state=restarted
+
+- name: restart ghost
+  supervisorctl: name=ghost state=restarted

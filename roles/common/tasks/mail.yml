@@ -1,0 +1,12 @@
+- name: Install postfix package
+  apt: pkg=postfix state=installed
+
+- name: Add postfix passwd file
+  template: src=postfix.passwd.j2 dest=/etc/postfix/sasl/passwd
+
+- name: Create postfix passwd debconf
+  command: postmap /etc/postfix/sasl/passwd creates=/etc/postfix/sasl/passwd.db
+
+- name: Replace postfix main.cf file
+  template: src=main.cf.j2 dest=/etc/postfix/main.cf
+  notify: restart postfix
