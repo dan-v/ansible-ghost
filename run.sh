@@ -8,10 +8,13 @@ pip install PyYAML jinja2 paramiko ansible
 # if decrypted key does not exists.. decrypt
 key_file=roles/blog/files/server.key
 if [ ! -f ${key_file} ]; then
+	if [ ! -f ${key_file}.cast5 ]; then echo "Could not find encrypted SSL key ${key_file}.cast5. Exiting."; exit 1; fi
+	echo -e "\nDecrypting SSL file ${key_file}.cast5 .."
 	openssl cast5-cbc -d -in ${key_file}.cast5 -out ${key_file}
 	chmod 600 ${key_file}
 	if [ ! -f ${key_file} ]; then echo "Could not find private SSL key ${key_file}. Exiting."; exit 1; fi
 fi
 
 # run playbook
+echo -e "\nRunning playbook .."
 ansible-playbook -i hosts site.yml
