@@ -9,6 +9,3 @@
 
 - name: restart postfix
   service: name=postfix state=restarted
-
-- name: reload ferm rules
-  command: /etc/init.d/ferm reload
