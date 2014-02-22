@@ -8,7 +8,9 @@
   vars_files: 
     - vars.yml
   vars_prompt:
-    mailer_password: "Enter password for mailer_user"
+    - name: "mailer_password"
+      prompt: "Enter password for gmail mail user"
+      private: yes
 
   roles:
     - common
