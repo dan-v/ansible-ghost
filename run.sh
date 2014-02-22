@@ -33,7 +33,9 @@ if [ ! -f ${key_file} ]; then
 	command="openssl cast5-cbc -d -in ${encrypted_key_file} -out ${key_file}"
 	run=$($command)
 	if [ $? -ne 0 ]; then
-		echo "ERROR: Failed to decrypt key '${encrypted_key_file}' with command '$command'" && exit 1
+		echo "ERROR: Failed to decrypt key '${encrypted_key_file}' with command '$command'"
+		rm -f $key_file
+		exit 1
 	else
 		if [ ! -f ${key_file} ]; then echo "Could not find private SSL key ${key_file}. Exiting."; exit 1; fi
 		echo -e "\n--- Successfully decrypted SSL file to ${key_file}\n"
