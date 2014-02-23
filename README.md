@@ -19,4 +19,8 @@ Replacing SSL private key
 * optionally if you want to be able to store the key encrypted: openssl cast5-cbc -e -in roles/blog/files/server.key -out roles/blog/files/server.key.cast5
 
 Ghost Backup
-* update variables in backup_ghost.sh and run. not currently integrated with playbook.
+* backup_ghost.sh is not integrated with playbook. i have this script running as a cronjob on home server for daily backups.
+* this creates two backups
+** settings and blog data through web interface
+** content folder over SSH connection
+* to run update variables in backup_ghost.sh and run script: ./backup_ghost.sh
