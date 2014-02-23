@@ -21,6 +21,6 @@ Replacing SSL private key
 Ghost Backup
 * backup_ghost.sh is not integrated with playbook. i have this script running as a cronjob on home server for daily backups.
 * this creates two backups
-** settings and blog data through web interface
-** content folder over SSH connection
+  * settings and blog data through web interface
+  * content folder over SSH connection
 * to run update variables in backup_ghost.sh and run script: ./backup_ghost.sh
