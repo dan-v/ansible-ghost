@@ -43,10 +43,11 @@ openssl cast5-cbc -e -in roles/blog/files/server.key -out roles/blog/files/serve
     domain: example.com
     mailer_email: "info@{{ domain }}"
 
-    # a new deploy user is used for dpeloyment
+    # a new deploy user is used for deployment
+    # deploy_password is generated using: python -c 'import crypt; print crypt.crypt("deployuserpassword", "$1$SomeSalt$")'
     deploy_user: deploy
     deploy_password: '<dan to update>'
-    ssh_pub_key: 'ssh-key <this is your ssh public key that you would put in authorized keys>'
+    ssh_pub_key: 'ssh-key <this is your ssh public key that you would put in authorized keys for deploy user>'
 
     # Updates from this release for secuity reasons
     ubuntu_release: 'precise'
