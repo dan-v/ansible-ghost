@@ -11,6 +11,7 @@ ansible-ghost
 
 #### Running playbook
 * login to host where ghost will be deployed (playbook is run from local box)
+
     apt-get install git -y
     git clone https://github.com/dan-v/ansible-ghost.git && cd ansible-ghost
 
