@@ -13,22 +13,29 @@ ansible-ghost
 
 1. login to host where ghost will be deployed (playbook is run from local box)
 
-     apt-get install git -y
-     git clone https://github.com/dan-v/ansible-ghost.git && cd ansible-ghost
+```
+apt-get install git -y
+git clone https://github.com/dan-v/ansible-ghost.git && cd ansible-ghost
+```
 
 2. update vars.yml (explained below)
 3. copy in your own ssl key as described below
 
-     ./run.sh
-
+```
+./run.sh
+```
 
 #### Updating information
 
 Replacing SSL private key and certificate file
+
 * copy in your own crt file to roles/blog/files/server.crt
 * copy in your own ssl key to roles/blog/files/server.key
 * optionally if you want to be able to store the key encrypted in github: 
-    openssl cast5-cbc -e -in roles/blog/files/server.key -out roles/blog/files/server.key.cast5
+
+```
+openssl cast5-cbc -e -in roles/blog/files/server.key -out roles/blog/files/server.key.cast5
+```
 
 #### vars.yml
 
