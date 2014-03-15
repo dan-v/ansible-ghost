@@ -10,15 +10,17 @@ ansible-ghost
 
 
 #### Running playbook
-* login to host where ghost will be deployed (playbook is run from local box)
 
-    apt-get install git -y
-    git clone https://github.com/dan-v/ansible-ghost.git && cd ansible-ghost
+1. login to host where ghost will be deployed (playbook is run from local box)
 
-* update vars.yml (explained below)
-* copy in your own ssl key as described below
+     apt-get install git -y
+     git clone https://github.com/dan-v/ansible-ghost.git && cd ansible-ghost
 
-    ./run.sh
+2. update vars.yml (explained below)
+3. copy in your own ssl key as described below
+
+     ./run.sh
+
 
 #### Updating information
 
