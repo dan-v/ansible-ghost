@@ -14,6 +14,7 @@ Running playbook
 * update vars.yml to your liking and copy in your own ssl key as mentioned below
 * ./run.sh
 
-Replacing SSL private key
+Replacing SSL private key and certificate file
+* copy in your own crt file to roles/blog/files/server.crt
 * copy in your own ssl key to roles/blog/files/server.key
-* optionally if you want to be able to store the key encrypted: openssl cast5-cbc -e -in roles/blog/files/server.key -out roles/blog/files/server.key.cast5
+* optionally if you want to be able to store the key encrypted in github: openssl cast5-cbc -e -in roles/blog/files/server.key -out roles/blog/files/server.key.cast5
