@@ -43,18 +43,18 @@ openssl cast5-cbc -e -in roles/blog/files/server.key -out roles/blog/files/serve
     domain: example.com
     mailer_email: "info@{{ domain }}"
 
-    # a new deploy user is used for deployment
+    # deploy user is used for remotely accessing machine after running playbook.
     # deploy_password is generated using: python -c 'import crypt; print crypt.crypt("deployuserpassword", "$1$SomeSalt$")'
     deploy_user: deploy
     deploy_password: '<dan to update>'
     ssh_pub_key: 'ssh-key <this is your ssh public key that you would put in authorized keys for deploy user>'
 
-    # Updates from this release for secuity reasons
+    # Updates from this release for security reasons
     ubuntu_release: 'precise'
 
     # blog
     blog_domain: "{{ domain }}"
-    ghost_ver: 0.4.1
+    ghost_ver: 0.4.2
     ghost_zip_url: "https://ghost.org/zip/ghost-{{ ghost_ver }}.zip"
     ghost_user: ghost
     ghost_install_dir: /home/ghost
