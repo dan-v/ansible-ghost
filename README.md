@@ -1,3 +1,5 @@
+### I have migrated from this playbook to using Docker. See: https://github.com/dan-v/docker-ghost-ssl. 
+
 ansible-ghost
 =============
 
@@ -54,7 +56,7 @@ openssl cast5-cbc -e -in roles/blog/files/server.key -out roles/blog/files/serve
 
     # blog
     blog_domain: "{{ domain }}"
-    ghost_zip_url: "https://ghost.org/zip/ghost-{{ ghost_ver }}.zip"
+    ghost_zip_url: "https://ghost.org/zip/ghost-latest.zip"
     ghost_user: ghost
     ghost_install_dir: /home/ghost
 
