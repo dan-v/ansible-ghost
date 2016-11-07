@@ -1,4 +1,4 @@
-### I have migrated from this playbook to using Docker. See: https://github.com/dan-v/docker-ghost-ssl. 
+# This repository is no longer maintained.
 
 ansible-ghost
 =============
